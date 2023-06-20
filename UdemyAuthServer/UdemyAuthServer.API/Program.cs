@@ -1,5 +1,12 @@
+using Microsoft.Extensions.Configuration;
+using SharedLibrary.Configurations;
+using UdemyAuthServer.Core.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
+
+builder.Services.Configure<CustomTokenOption>(builder.Configuration.GetSection("TokenOptions"));
+builder.Services.Configure<List<Client>>(builder.Configuration.GetSection("Clients"));
 // Add services to the container.
 
 builder.Services.AddControllers();

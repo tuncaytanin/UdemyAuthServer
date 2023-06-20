@@ -41,7 +41,8 @@ namespace UdemyAuthServer.Data.Repositories
 
         public void Remove(T entity)
         {
-            _dbSet.Remove(entity);  
+            _dbSet.Remove(entity); 
+            
         }
 
         public T Update(T entity)

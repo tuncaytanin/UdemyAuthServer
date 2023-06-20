@@ -1,4 +1,5 @@
-﻿using SharedLibrary.Dtos;
+﻿using Microsoft.EntityFrameworkCore;
+using SharedLibrary.Dtos;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -77,9 +78,11 @@ namespace UdemyAuthServer.Service.Services
             return Response<NoDataDto>.Success(201);
         }
 
-        public Response<IEnumerable<TDto>> Where(Expression<Func<TEntity, bool>> predicate)
+        public async Task<Response<IEnumerable<TDto>>> Where(Expression<Func<TEntity, bool>> predicate)
         {
-            throw new NotImplementedException();
+            var list = _repository.Where(predicate);
+            var sonuc = ObjectMapper.Mapper.Map<IEnumerable<TDto>>(await list.Take(5).ToListAsync());
+            return Response<IEnumerable<TDto>>.Success(sonuc, 201);
         }
     }
 }

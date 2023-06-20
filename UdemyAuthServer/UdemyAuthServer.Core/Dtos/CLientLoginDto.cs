@@ -1,8 +1,8 @@
 ﻿namespace UdemyAuthServer.Core.Dtos
 {
-    public class CLientLoginDto
+    public class ClientLoginDto
     {
-        public int LientId { get; set; }
-        public  string LientSecret { get; set; }
+        public string ClientId { get; set; }
+        public  string ClientSecret { get; set; }
     }
 }
