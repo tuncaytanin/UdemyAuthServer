@@ -1,6 +1,6 @@
 ﻿namespace UdemyAuthServer.Core.Dtos
 {
-    public class ProdcutDto
+    public class ProductDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

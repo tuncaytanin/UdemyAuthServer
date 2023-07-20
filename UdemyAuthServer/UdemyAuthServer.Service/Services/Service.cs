@@ -72,8 +72,9 @@ namespace UdemyAuthServer.Service.Services
             if (entity is null)
                 return Response<NoDataDto>.Fail($"Id si {id}  içersinde bulunamadı.{nameof(entity)}", 404, true);
 
-            _repository.Update(entity);
-            await _unitOfWork.CommitAsync();
+            var updateDto = ObjectMapper.Mapper.Map<TEntity>(entityDto);
+            _repository.Update(updateDto);
+             _unitOfWork.Commit();
 
             return Response<NoDataDto>.Success(201);
         }
@@ -85,4 +86,5 @@ namespace UdemyAuthServer.Service.Services
             return Response<IEnumerable<TDto>>.Success(sonuc, 201);
         }
     }
+
 }

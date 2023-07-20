@@ -6,6 +6,7 @@ using SharedLibrary.Dtos;
 using UdemyAuthServer.Core.Configuration;
 using UdemyAuthServer.Core.Dtos;
 using UdemyAuthServer.Core.Models;
+using UdemyAuthServer.Core.Repositories;
 using UdemyAuthServer.Core.Services;
 using UdemyAuthServer.Core.UnitOfWorks;
 using UdemyAuthServer.Data.Repositories;
@@ -18,12 +19,14 @@ namespace UdemyAuthServer.Service.Services
         private readonly ITokenService _tokenService;
         private readonly UserManager<UserApp> _userManager;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IGenericRepository<UserRefreshToken> _userRefreshTokenService;
-        public AuthenticationService(IOptions<List<Client>> optionClients,ITokenService tokenService,UserManager<UserApp> userManager, IUnitOfWork unitOfWork, IGenericRepository<UserRefreshToken> userRefreshTokenService)
+        private readonly IRepository<UserRefreshToken> _userRefreshTokenService;
+
+        public AuthenticationService(IOptions<List<Client>> optionsClient, ITokenService tokenService, UserManager<UserApp> userManager, IUnitOfWork unitOfWork, IRepository<UserRefreshToken> userRefreshTokenService)
         {
-            _clients = optionClients.Value;
+            _clients = optionsClient.Value;
+
             _tokenService = tokenService;
-            _userManager = userManager; 
+            _userManager = userManager;
             _unitOfWork = unitOfWork;
             _userRefreshTokenService = userRefreshTokenService;
         }
@@ -32,7 +35,7 @@ namespace UdemyAuthServer.Service.Services
             if (loginDto is null) throw new ArgumentNullException(nameof(loginDto));
 
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
-            if (user != null) return Response<TokenDto>.Fail("Email or Password is wrong", 400, true);
+            if (user == null) return Response<TokenDto>.Fail("Email or Password is wrong", 400, true);
             if(!await _userManager.CheckPasswordAsync(user,loginDto.Password))
                 return Response<TokenDto>.Fail("Email or Password is wrong", 400, true);
 

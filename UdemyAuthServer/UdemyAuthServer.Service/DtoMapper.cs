@@ -13,7 +13,7 @@ namespace UdemyAuthServer.Service
     {
         public DtoMapper()
         {
-            CreateMap<Product, ProdcutDto>().ReverseMap();
+            CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<UserApp, UserAppDto>().ReverseMap();  
         }
     }

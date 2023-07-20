@@ -1,0 +1,16 @@
+﻿using FluentValidation;
+using UdemyAuthServer.Core.Dtos;
+
+namespace UdemyAuthServer.API.Validations
+{
+    public class CreateUserDtoValidator:AbstractValidator<CreateUserDto>
+    {
+        public CreateUserDtoValidator()
+        {
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required").EmailAddress().WithMessage("Email is not correct");
+
+            RuleFor(x=>x.Password).NotEmpty().WithMessage("Password is required");
+            RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is required") ;
+        }
+    }
+}

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SharedLibrary.Configurations;
+using SharedLibrary.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -68,14 +69,13 @@ namespace UdemyAuthServer.Service.Services
             SigningCredentials signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
 
             JwtSecurityToken jwtSecurityToken = new JwtSecurityToken(
-                issuer: _tokenOption.Issuer,
-                expires: accessTokenExpiration,
-                notBefore: DateTime.Now,
-                claims: GetClaims(userApp, _tokenOption.Audience),
-                signingCredentials: signingCredentials
-                );
+                 issuer: _tokenOption.Issuer,
+                 expires: accessTokenExpiration,
+                  notBefore: DateTime.Now,
+                  claims: GetClaims(userApp, _tokenOption.Audience),
+                  signingCredentials: signingCredentials);
 
-            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            var handler = new JwtSecurityTokenHandler();
             var token = handler.WriteToken(jwtSecurityToken);
             var tokenDto = new TokenDto
             {

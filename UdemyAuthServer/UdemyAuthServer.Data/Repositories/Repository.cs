@@ -9,11 +9,11 @@ using UdemyAuthServer.Core.Repositories;
 
 namespace UdemyAuthServer.Data.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly AppDbContext _appDbContext;
         protected readonly DbSet<T> _dbSet;
-        public GenericRepository(AppDbContext appDbContext)
+        public Repository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
             _dbSet = _appDbContext.Set<T>();    

@@ -10,8 +10,8 @@ namespace UdemyAuthServer.Data
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _dbContext;
-        public UnitOfWork(DbContext dbContext)
+        private readonly AppDbContext _dbContext;
+        public UnitOfWork(AppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
