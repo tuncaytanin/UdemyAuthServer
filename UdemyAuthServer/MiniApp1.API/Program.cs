@@ -1,4 +1,4 @@
-using SharedLibrary.Configurations;
+﻿using SharedLibrary.Configurations;
 using SharedLibrary.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +14,17 @@ builder.Services.AddCustomTokenAuth(tokenOptions);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// yeni bir calim policy oluşturma, 
+
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("CityPolicy", policy =>
+    {
+        policy.RequireClaim("city", "ankara","istanbul");
+    });
+});
+
 
 var app = builder.Build();
 
