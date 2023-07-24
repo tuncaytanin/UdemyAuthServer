@@ -1,4 +1,6 @@
-﻿using SharedLibrary.Configurations;
+﻿using Microsoft.AspNetCore.Authorization;
+using MiniApp1.API.Requirements;
+using SharedLibrary.Configurations;
 using SharedLibrary.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,15 +17,24 @@ builder.Services.AddCustomTokenAuth(tokenOptions);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddSingleton<IAuthorizationHandler, BirthDayRequirementHandler>();
 // yeni bir calim policy oluşturma, 
 
 builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("CityPolicy", policy =>
     {
-        policy.RequireClaim("city", "ankara","istanbul");
+        policy.RequireClaim("city","ankara","istanbul");
+    });
+
+
+    opt.AddPolicy("BirthDayPolicy", policy =>
+    {
+        policy.Requirements.Add(new BirthDayRequirement(18));
     });
 });
+
 
 
 var app = builder.Build();

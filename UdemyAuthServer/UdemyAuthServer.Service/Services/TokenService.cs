@@ -45,7 +45,9 @@ namespace UdemyAuthServer.Service.Services
                 new Claim(JwtRegisteredClaimNames.Email,userApp.Email),
                 new Claim(ClaimTypes.Name,userApp.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
-                new Claim("city",userApp.City)
+                new Claim("city",userApp.City),
+                new Claim("birth-date",((DateTime)userApp.BirthDay).ToShortDateString())
+                
             };
 
             userLit.AddRange(auidence.Select(x => new Claim(JwtRegisteredClaimNames.Aud, x)));
